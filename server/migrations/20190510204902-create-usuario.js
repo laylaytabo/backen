@@ -27,6 +27,15 @@ module.exports = {
       tipo_usuario:{
         type: Sequelize.STRING
       },
+      idReg_personal:{
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Registro_personals',
+          key: 'id',
+          as: 'idReg_personal',
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

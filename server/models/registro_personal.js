@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Registro_personal.associate = function(models) {
     // associations can be defined here
+    Registro_personal.hasMany(models.Usuario, {
+      foreignKey: 'idReg_personal',
+    });
   };
   return Registro_personal;
 };

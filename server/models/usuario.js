@@ -48,6 +48,12 @@ export default (sequelize, DataTypes) => {
         args: false,
       }
     },
+    idReg_personal: { 
+      type: DataTypes.INTEGER,
+      allowNull:{
+        args: false,
+      }
+    }
    
   }, {});
   Usuario.beforeSave((usuario, options) => {
@@ -65,7 +71,10 @@ export default (sequelize, DataTypes) => {
   };
   Usuario.associate = (models) => {
     // associations can be defined here
-   
+    Usuario.belongsTo(models.Registro_personal, {
+      foreignKey: 'idReg_personal',
+      onDelete: 'CASCADE'
+    });
   };
   return Usuario;
 };
