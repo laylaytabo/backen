@@ -39,7 +39,5 @@ module.exports = {
       }
     });
   },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Registro_personals');
-  }
+  down: queryInterface /* , Sequelize */ =>  queryInterface.dropTable('Registro_personals')
 };
