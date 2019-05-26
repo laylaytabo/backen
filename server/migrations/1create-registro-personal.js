@@ -11,7 +11,7 @@ module.exports = {
       nombre: {
         type: Sequelize.TEXT
       },
-      apellidom: {
+      apellidop: {
         type: Sequelize.TEXT
       },
       apellidom: {

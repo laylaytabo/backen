@@ -21,25 +21,19 @@ export default (sequelize, DataTypes) => {
       type:  DataTypes.STRING,
       allowNull:{
         args: false,
-      },
-      
-    
+      },   
       /*validate: {
         isNotShort: (value) => {
           if (value.length < 8) {
             throw new Error('La contraseña Debe tener mas de 12 caracteres');
           }
         },
-      }*/
-      
-      
-      
+      }*/      
     },
     estado:{
       type: DataTypes.BOOLEAN,
       allowNull:{
-        args: false,
-      
+        default: false,
       }
     }, 
     tipo_usuario:{

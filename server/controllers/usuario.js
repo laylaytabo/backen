@@ -9,7 +9,66 @@ process.env.SECRET_KEY = 'secret';
 
 class Usuarios {
   
-  static registar(req, res) {
+  static registar(req, res) {    
+    Usuario.findAll({
+      where:{correo : req.body.correo},
+    }).then((correo)=> {
+      //res.status(200).send(correo)
+      if(correo != ""){
+        res.status(200).send("ya existe el correo")
+      }else{
+        const { nombre, correo, contraseña, estado, tipo_usuario } = req.body
+        const { idReg_personal } = req.params
+      return Usuario
+        .create({
+          nombre,
+          correo,
+          contraseña,
+          estado,
+          tipo_usuario,
+          idReg_personal
+        })
+        .then(usuarioData => res.status(201).send({
+          success: true,
+          message: 'Usuario creado correctamente',
+          usuarioData
+        }))
+        .catch(error => res.status(400).send(error.message));
+      }
+
+    })
+    
+    } 
+    static login(req,res){
+      Usuario.findAll({
+        where:{correo : req.body.correo, contraseña : req.body.contraseña},
+      }).then ((login) =>{
+        if(login == ""){
+          res.status(200).send({
+            success: false,
+          })
+        }else{ if(login[0].contraseña == req.body.contraseña){
+          res.status(200).send({
+            success: true,
+          })  
+         }
+        }
+      })
+    }
+    //servico para mostrar las cuentas o cuenta del usraio
+    static onlyCuenta(req, res){                
+      var id = req.params.id;  
+      Usuario.findAll({
+         where: {idReg_personal: id}
+         //attributes: ['id', ['description', 'descripcion']]
+       }).then((data) => {
+         res.status(200).json(data);
+      });     
+    }
+}
+
+export default Usuarios;
+
     /*const usuarioData={
       nombre: req.body.nombre,
         correo: req.body.correo,
@@ -43,55 +102,3 @@ class Usuarios {
     })
 
     */
-    
-    
-    Usuario.findAll({
-      where:{correo:req.body.correo},
-      
-
-    }).then((correo)=> {
-      //res.status(200).send(correo)
-      if(correo != ""){
-        res.status(200).send("ya existe el correo")
-      }else{
-        const { nombre, correo, contraseña, estado, tipo_usuario } = req.body
-      return Usuario
-        .create({
-          nombre,
-          correo,
-          contraseña,
-          estado,
-          tipo_usuario
-        })
-        .then(usuarioData => res.status(201).send({
-          success: true,
-          message: 'Usuario creado correctamente',
-          usuarioData
-        }))
-        .catch(error => res.status(400).send(error.message));
-      }
-
-    })
-    
-    }
-    
-    static login(req,res){
-      Usuario.findAll({
-        where:{correo:req.body.correo, contraseña: req.body.contraseña},
-      }).then ((login) =>{
-        if(login == ""){
-          res.status(200).send("este usario  existe")
-        }else{ if(login[0].contraseña == req.body.contraseña){
-          res.status(200).send("no existe")  
-         }
-        }
-        
-         
-       
-        
-      
-      })
-    }
-}
-
-export default Usuarios;
